@@ -15,6 +15,7 @@ class RegisterController extends GetxController {
 
   final user = Rxn<User>();
   final currentUser = Rxn<UserModel>();
+
   @override
   void onClose() {
     // TODO: implement onClose
@@ -26,15 +27,21 @@ class RegisterController extends GetxController {
 
   @override
   void onInit() {
-    // TODO: implement onInit
-    super.onInit();
+    user.bindStream(auth.authStateChanges());
+
     ever(user, (User? userState) async {
       if (user.value == null) {
+        print("11111111111111111");
         currentUser.value = null;
+
         return;
       } else {
+        print("222222222222222222222");
+
         currentUser.value = await AuthApi.getUser(user.value!.uid);
+        print("current user = ${currentUser.value}");
       }
     });
+    super.onInit();
   }
 }

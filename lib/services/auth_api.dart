@@ -1,10 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
+import 'package:social_media_app_fl/controllers/register_controller.dart';
 import 'package:social_media_app_fl/models/user_model.dart';
 
 class AuthApi {
+  static RegisterController registerController = Get.put(RegisterController());
   static CollectionReference<Map<String, dynamic>> userCollection =
       FirebaseFirestore.instance.collection("users");
+
+  static FirebaseFirestore store = FirebaseFirestore.instance;
 
   static FirebaseAuth auth = FirebaseAuth.instance;
 
@@ -14,7 +19,9 @@ class AuthApi {
       final UserCredential userCredintial =
           await auth.createUserWithEmailAndPassword(email: email, password: password);
       if (userCredintial.user != null) {
-        registerUser(name, email, password);
+        registerController.currentUser.value =
+            UserModel(id: userCredintial.user!.uid, name: name, email: email, password: password);
+        registerUser(registerController.currentUser.value!);
       }
     } on FirebaseAuthException catch (e) {
       print(e.toString());
@@ -33,19 +40,21 @@ class AuthApi {
     }
   }
 
-  static Future<UserModel> getUser(String uid) async {
-    final userDoc = await userCollection.doc(uid).get();
+  static Future<UserModel?> getUser(String uid) async {
+    print("uid = $uid");
+    final userDoc = await store.collection('users').doc(uid).get();
 
     final user = userDoc.data();
+    print(user?["name"]);
 
     return UserModel.fromMap(user!);
   }
 
-  static Future<void> registerUser(String name, String email, String password) async {
-    await userCollection.doc().set({
-      "name": name,
-      "email": email,
-      "password": password,
-    });
+  static Future<void> registerUser(UserModel userModel) async {
+    try {
+      await userCollection.doc(userModel.id).set(userModel.toMap());
+    } catch (e) {
+      print(e.toString());
+    }
   }
 }
