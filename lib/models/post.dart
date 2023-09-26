@@ -1,20 +1,26 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Post {
   String title;
   String description;
   String image;
-  DateTime? date;
+  Timestamp? date;
 
-  Post({required this.title, required this.description, required this.image, this.date});
+  Post({
+    required this.title,
+    required this.description,
+    required this.image,
+    this.date,
+  });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'title': title,
       'description': description,
       'image': image,
-      'date': date?.millisecondsSinceEpoch,
+      'date': date,
     };
   }
 
@@ -23,7 +29,7 @@ class Post {
       title: map['title'] as String,
       description: map['description'] as String,
       image: map['image'] as String,
-      date: map['date'] != null ? DateTime.fromMillisecondsSinceEpoch(map['date'] as int) : null,
+      date: map['date'] as Timestamp?,
     );
   }
 

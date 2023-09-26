@@ -23,10 +23,28 @@ class PostApi {
   }
 
   static Stream<List<Post>> getAllPosts() {
-    final result = store.collection("allPost").snapshots();
+    final result = store.collection("allPost").orderBy('date', descending: true).snapshots();
     final streamList =
         result.map((event) => event.docs.map((e) => Post.fromMap(e.data())).toList());
 
     return streamList;
   }
+
+//   Future<void> getPostsOrderedByDate() async {
+//   try {
+//     CollectionReference postsRef = FirebaseFirestore.instance.collection('posts');
+
+//     QuerySnapshot querySnapshot = await postsRef
+//         .orderBy('date', descending: true)
+//         .get();
+
+//     List<DocumentSnapshot> documents = querySnapshot.docs;
+
+//     for (DocumentSnapshot doc in documents) {
+//       print(doc.data());
+//     }
+//   } catch (e) {
+//     print('Verileri getirirken hata oluştu: $e');
+//   }
+// }
 }

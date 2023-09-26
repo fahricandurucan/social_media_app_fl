@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
@@ -110,7 +111,7 @@ class AddingPostPage extends StatelessWidget {
                         title: addingPostController.title.text,
                         description: addingPostController.description.text,
                         image: addingPostController.url.value,
-                        date: addingPostController.date.value);
+                        date: Timestamp.now());
 
                     EasyLoading.show(maskType: EasyLoadingMaskType.clear, status: "post loading");
                     Future.delayed(const Duration(seconds: 2), () {
