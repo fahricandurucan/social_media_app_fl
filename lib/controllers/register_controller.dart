@@ -16,6 +16,10 @@ class RegisterController extends GetxController {
   final user = Rxn<User>();
   final currentUser = Rxn<UserModel>();
 
+  final loginLoading = true.obs;
+
+  final bottomNavIdx = 0.obs;
+
   @override
   void onClose() {
     // TODO: implement onClose
@@ -33,6 +37,7 @@ class RegisterController extends GetxController {
       if (user.value == null) {
         print("11111111111111111");
         currentUser.value = null;
+        loginLoading.value = false;
 
         return;
       } else {
@@ -41,6 +46,9 @@ class RegisterController extends GetxController {
         currentUser.value = await AuthApi.getUser(user.value!.uid);
         print("current user = ${currentUser.value}");
       }
+
+      bottomNavIdx.value = 0;
+      loginLoading.value = false;
     });
     super.onInit();
   }
