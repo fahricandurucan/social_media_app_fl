@@ -30,14 +30,13 @@ class PostWidget extends StatelessWidget {
                 Get.to(DetailPage(post: post));
               },
               child: Container(
-                width: double.infinity,
-                height: 250,
-                decoration: const BoxDecoration(color: Colors.greenAccent),
-                child: Image.network(
-                  post.image,
-                  fit: BoxFit.cover,
-                ),
-              ),
+                  width: double.infinity,
+                  height: 250,
+                  decoration: const BoxDecoration(color: Colors.greenAccent),
+                  child: Image.network(
+                    post.image,
+                    fit: BoxFit.cover,
+                  )),
             ),
           ),
           Padding(

@@ -44,6 +44,8 @@ dependencies:
   google_nav_bar: ^5.0.6
   camera: ^0.10.5+4
   image_picker: ^1.0.4
+  intl: ^0.18.1
+  firebase_storage: ^11.2.7
   
 
 dev_dependencies:

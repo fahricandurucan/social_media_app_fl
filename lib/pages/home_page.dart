@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:social_media_app_fl/services/post_api.dart';
 import 'package:social_media_app_fl/utils/const.dart';
 import 'package:social_media_app_fl/widgets/post_widget.dart';
 
@@ -12,13 +13,27 @@ class HomePage extends StatelessWidget {
         centerTitle: true,
         title: const Text("SoSocial"),
       ),
-      body: ListView.builder(
-          itemCount: Const.dummyPosts.length,
-          itemBuilder: (context, index) {
-            final post = Const.dummyPosts[index];
-            return PostWidget(
-              post: post,
-            );
+      body: StreamBuilder(
+          stream: PostApi.getAllPosts(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              var postList = snapshot.data;
+              postList!.addAll(Const.dummyPosts);
+              print("snapshot data = ${postList.length}");
+              return postList.isNotEmpty
+                  ? ListView.builder(
+                      itemCount: postList.length,
+                      itemBuilder: (context, index) {
+                        final post = postList[index];
+                        return PostWidget(
+                          post: post,
+                        );
+                      })
+                  : const Center(
+                      child: Text("error"),
+                    );
+            }
+            return const Center(child: CircularProgressIndicator());
           }),
     );
   }
