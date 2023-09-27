@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:social_media_app_fl/controllers/register_controller.dart';
 import 'package:social_media_app_fl/pages/login_page.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -8,6 +9,7 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final registerController = Get.find<RegisterController>();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profil Sayfası'),
@@ -21,9 +23,9 @@ class ProfilePage extends StatelessWidget {
               backgroundColor: Colors.red,
             ),
             const SizedBox(height: 20),
-            const Text(
-              'Kullanıcı Adı',
-              style: TextStyle(
+            Text(
+              registerController.currentUser.value!.name,
+              style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),

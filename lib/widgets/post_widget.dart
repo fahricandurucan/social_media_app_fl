@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:readmore/readmore.dart';
+import 'package:intl/intl.dart';
 import 'package:social_media_app_fl/models/post.dart';
 import 'package:social_media_app_fl/pages/detail_page.dart';
 
@@ -20,10 +20,38 @@ class PostWidget extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(post.title),
+                const CircleAvatar(
+                  child: Icon(Icons.person),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Column(
+                  children: [
+                    Text(post.userName),
+                    Text(
+                      DateFormat.yMMMEd().format(
+                        post.date!.toDate(),
+                      ),
+                      style: const TextStyle(fontSize: 10),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
+          const SizedBox(
+            height: 10,
+          ),
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.start,
+          //     children: [
+          //       Text(post.title),
+          //     ],
+          //   ),
+          // ),
           ClipRRect(
             child: GestureDetector(
               onTap: () {
@@ -39,19 +67,50 @@ class PostWidget extends StatelessWidget {
                   )),
             ),
           ),
+
           Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ReadMoreText(
-              post.description,
-              trimLines: 1,
-              colorClickableText: Colors.pink,
-              trimMode: TrimMode.Line,
-              trimCollapsedText: 'more',
-              trimExpandedText: 'less',
-              moreStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-              lessStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+            child: Row(children: [
+              IconButton(onPressed: () {}, icon: const Icon(Icons.favorite_border)),
+              const Text("0 likes"),
+            ]),
           ),
+
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+            child: Row(
+              children: [
+                const Text(
+                  "kullanıcı adı",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Expanded(
+                  child: Text(
+                    post.description,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
+            ),
+          )
+
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          //   child: ReadMoreText(
+          //     post.description,
+          //     trimLines: 2,
+          //     colorClickableText: Colors.pink,
+          //     trimMode: TrimMode.Line,
+          //     trimCollapsedText: 'more',
+          //     trimExpandedText: 'less',
+          //     moreStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+          //     lessStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+          //   ),
+          // ),
         ],
       ),
     );

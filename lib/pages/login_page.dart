@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:social_media_app_fl/controllers/login_controller.dart';
-import 'package:social_media_app_fl/pages/root_wrapper.dart';
 import 'package:social_media_app_fl/services/auth_api.dart';
 
 class LoginPage extends StatelessWidget {
@@ -33,7 +32,9 @@ class LoginPage extends StatelessWidget {
               onPressed: () {
                 AuthApi.signIn(
                     email: loginController.email.text, password: loginController.password.text);
-                Get.offAll(const RootWrapper());
+                loginController.email.text = "";
+                loginController.password.text = "";
+                print("00000000000000 ${loginController.email.text}");
               },
               child: const Text('Log in'),
             ),

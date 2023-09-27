@@ -108,6 +108,7 @@ class AddingPostPage extends StatelessWidget {
                     Get.snackbar("Hata", "Litfen boşlukları doldurunuz.");
                   } else {
                     final post = Post(
+                        userName: registerController.currentUser.value!.name,
                         title: addingPostController.title.text,
                         description: addingPostController.description.text,
                         image: addingPostController.url.value,

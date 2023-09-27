@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:social_media_app_fl/controllers/register_controller.dart';
 import 'package:social_media_app_fl/models/user_model.dart';
+import 'package:social_media_app_fl/pages/root_wrapper.dart';
 
 class AuthApi {
   static RegisterController registerController = Get.put(RegisterController());
@@ -34,6 +35,7 @@ class AuthApi {
           await auth.signInWithEmailAndPassword(email: email, password: password);
       if (userCredential.user != null) {
         print("GİRİŞ BAŞARILI");
+        Get.offAll(const RootWrapper());
       }
     } on FirebaseAuthException catch (e) {
       print(e.toString());
