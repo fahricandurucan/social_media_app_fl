@@ -8,6 +8,7 @@ import 'package:social_media_app_fl/controllers/register_controller.dart';
 import 'package:social_media_app_fl/models/post.dart';
 import 'package:social_media_app_fl/services/post_api.dart';
 import 'package:social_media_app_fl/utils/theme.dart';
+import 'package:social_media_app_fl/widgets/animated_text_widget.dart';
 import 'package:social_media_app_fl/widgets/button_widget.dart';
 
 class AddingPostPage extends StatelessWidget {
@@ -19,7 +20,8 @@ class AddingPostPage extends StatelessWidget {
     final registerController = Get.find<RegisterController>();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Post Ekleme Sayfası'),
+        centerTitle: true,
+        title: const AnimatedTextWidget(text: "Post Adding"),
       ),
       body: SingleChildScrollView(
         child: Padding(

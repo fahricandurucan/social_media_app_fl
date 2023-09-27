@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:social_media_app_fl/services/post_api.dart';
 import 'package:social_media_app_fl/utils/const.dart';
+import 'package:social_media_app_fl/widgets/animated_text_widget.dart';
 import 'package:social_media_app_fl/widgets/post_widget.dart';
 
 class HomePage extends StatelessWidget {
@@ -17,7 +18,9 @@ class HomePage extends StatelessWidget {
           ),
         ),
         centerTitle: true,
-        title: const Text("SoSocial"),
+        title: const AnimatedTextWidget(
+          text: "SoSocial",
+        ),
       ),
       body: StreamBuilder(
           stream: PostApi.getAllPosts(),

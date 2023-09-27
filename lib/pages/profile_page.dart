@@ -3,6 +3,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:social_media_app_fl/controllers/register_controller.dart';
 import 'package:social_media_app_fl/pages/login_page.dart';
+import 'package:social_media_app_fl/widgets/animated_text_widget.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -12,7 +13,8 @@ class ProfilePage extends StatelessWidget {
     final registerController = Get.find<RegisterController>();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profil Sayfası'),
+        centerTitle: true,
+        title: const AnimatedTextWidget(text: "My Profile "),
       ),
       body: Center(
         child: Column(
