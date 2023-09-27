@@ -6,6 +6,7 @@ import 'package:social_media_app_fl/pages/adding_post_page.dart';
 import 'package:social_media_app_fl/pages/favorite_page.dart';
 import 'package:social_media_app_fl/pages/home_page.dart';
 import 'package:social_media_app_fl/pages/profile_page.dart';
+import 'package:social_media_app_fl/utils/theme.dart';
 
 class NavBar extends StatelessWidget {
   const NavBar({Key? key}) : super(key: key);
@@ -29,9 +30,9 @@ class NavBar extends StatelessWidget {
             rippleColor: Colors.grey[300]!,
             hoverColor: Colors.grey[100]!,
             gap: 8,
-            activeColor: Colors.blueGrey,
+            activeColor: CColors.cyan,
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-            tabBackgroundColor: Colors.white.withOpacity(.5),
+            tabBackgroundColor: const Color.fromARGB(255, 230, 230, 230).withOpacity(.5),
             onTabChange: (index) {
               controller.bottomNavIdx.value = index;
               print(controller.bottomNavIdx.value.toString());

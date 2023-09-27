@@ -10,6 +10,12 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 4),
+          child: Image.asset(
+            "assets/sosocial.png",
+          ),
+        ),
         centerTitle: true,
         title: const Text("SoSocial"),
       ),

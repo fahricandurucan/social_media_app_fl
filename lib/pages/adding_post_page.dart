@@ -7,6 +7,8 @@ import 'package:social_media_app_fl/controllers/adding_post_controller.dart';
 import 'package:social_media_app_fl/controllers/register_controller.dart';
 import 'package:social_media_app_fl/models/post.dart';
 import 'package:social_media_app_fl/services/post_api.dart';
+import 'package:social_media_app_fl/utils/theme.dart';
+import 'package:social_media_app_fl/widgets/button_widget.dart';
 
 class AddingPostPage extends StatelessWidget {
   const AddingPostPage({super.key});
@@ -40,7 +42,7 @@ class AddingPostPage extends StatelessWidget {
                     : Container(
                         width: double.infinity,
                         height: 200,
-                        decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+                        decoration: BoxDecoration(border: Border.all(color: CColors.black)),
                         child: const Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -52,19 +54,24 @@ class AddingPostPage extends StatelessWidget {
                           ],
                         )),
               ),
+              const SizedBox(
+                height: 5,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  ElevatedButton(
-                      onPressed: () {
-                        addingPostController.pickImage(ImageSource.gallery);
-                      },
-                      child: const Text("Gallery")),
-                  ElevatedButton(
-                      onPressed: () {
-                        addingPostController.pickImage(ImageSource.camera);
-                      },
-                      child: const Text("Camera")),
+                  ButtonWidget(
+                    text: "Gallery",
+                    onTap: () {
+                      addingPostController.pickImage(ImageSource.gallery);
+                    },
+                  ),
+                  ButtonWidget(
+                    text: "Camera",
+                    onTap: () {
+                      addingPostController.pickImage(ImageSource.camera);
+                    },
+                  )
                 ],
               ),
               const SizedBox(
@@ -101,8 +108,9 @@ class AddingPostPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 8),
-              ElevatedButton(
-                onPressed: () {
+              ButtonWidget(
+                text: "Postu Gönder",
+                onTap: () {
                   if (addingPostController.title.text == "" ||
                       addingPostController.title.text == "") {
                     Get.snackbar("Hata", "Litfen boşlukları doldurunuz.");
@@ -125,7 +133,6 @@ class AddingPostPage extends StatelessWidget {
                     });
                   }
                 },
-                child: const Text('Postu Gönder'),
               ),
             ],
           ),
