@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:social_media_app_fl/models/post.dart';
 
 class Const {
+  static String userID = "";
   static List<Post> dummyPosts = <Post>[
     Post(
         date: Timestamp.now(),

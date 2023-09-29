@@ -20,8 +20,12 @@ class AuthApi {
       final UserCredential userCredintial =
           await auth.createUserWithEmailAndPassword(email: email, password: password);
       if (userCredintial.user != null) {
-        registerController.currentUser.value =
-            UserModel(id: userCredintial.user!.uid, name: name, email: email, password: password);
+        registerController.currentUser.value = UserModel(
+            id: userCredintial.user!.uid,
+            name: name,
+            email: email,
+            password: password,
+            profileImage: '');
         registerUser(registerController.currentUser.value!);
       }
     } on FirebaseAuthException catch (e) {
@@ -58,5 +62,9 @@ class AuthApi {
     } catch (e) {
       print(e.toString());
     }
+  }
+
+  static Future<void> updateProfilePhotoUser(String uid, String url) async {
+    await userCollection.doc(uid).update({"profileImage": url});
   }
 }

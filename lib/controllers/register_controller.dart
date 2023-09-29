@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:social_media_app_fl/models/user_model.dart';
 import 'package:social_media_app_fl/services/auth_api.dart';
+import 'package:social_media_app_fl/utils/const.dart';
 
 class RegisterController extends GetxController {
   final name = TextEditingController();
@@ -45,6 +46,7 @@ class RegisterController extends GetxController {
 
         currentUser.value = await AuthApi.getUser(user.value!.uid);
         print("current user = ${currentUser.value}");
+        Const.userID = currentUser.value!.id;
       }
 
       bottomNavIdx.value = 0;
