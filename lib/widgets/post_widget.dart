@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:social_media_app_fl/models/post.dart';
 import 'package:social_media_app_fl/pages/detail_page.dart';
-import 'package:social_media_app_fl/utils/theme.dart';
+import 'package:social_media_app_fl/widgets/circle_avatar_widget.dart';
 
 class PostWidget extends StatelessWidget {
   final Post post;
@@ -28,12 +28,7 @@ class PostWidget extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const CircleAvatar(
-                      child: Icon(
-                        Icons.person,
-                        color: CColors.cyan,
-                      ),
-                    ),
+                    const CircleAvatarWidget(radius: 20),
                     const SizedBox(
                       width: 10,
                     ),

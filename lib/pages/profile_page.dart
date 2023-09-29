@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:social_media_app_fl/controllers/profile_page_controller.dart';
 import 'package:social_media_app_fl/controllers/register_controller.dart';
 import 'package:social_media_app_fl/pages/login_page.dart';
+import 'package:social_media_app_fl/widgets/alert_dialog_widget.dart';
 import 'package:social_media_app_fl/widgets/animated_text_widget.dart';
+import 'package:social_media_app_fl/widgets/circle_avatar_widget.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -11,18 +15,50 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final registerController = Get.find<RegisterController>();
+    final profilController = Get.put(ProfilePageController());
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: const AnimatedTextWidget(text: "My Profile "),
+        actions: [
+          IconButton(
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (context) => AlertDialogWidget(
+                        onTapCamera: () {
+                          profilController.pickImage(ImageSource.camera);
+                          Get.back();
+                        },
+                        onTapGallery: () {
+                          Get.back();
+                        },
+                      ));
+            },
+            icon: const Icon(Icons.edit),
+          )
+        ],
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const CircleAvatar(
-              radius: 80,
-              backgroundColor: Colors.red,
+            Obx(
+              () => profilController.profilUrl.value != ""
+                  ? ClipRRect(
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(75),
+                      ),
+                      child: SizedBox(
+                        width: 150,
+                        height: 150,
+                        child: Image.network(
+                          profilController.profilUrl.value,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    )
+                  : const CircleAvatarWidget(radius: 80),
             ),
             const SizedBox(height: 20),
             Text(
