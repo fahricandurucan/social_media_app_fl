@@ -23,27 +23,52 @@ class HomePage extends StatelessWidget {
         ),
       ),
       body: StreamBuilder(
-          stream: PostApi.getAllPosts(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              var postList = snapshot.data;
-              postList!.addAll(Const.dummyPosts);
-              print("snapshot data = ${postList.length}");
-              return postList.isNotEmpty
-                  ? ListView.builder(
-                      itemCount: postList.length,
-                      itemBuilder: (context, index) {
-                        final post = postList[index];
+        stream: PostApi.getAllPosts(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            var postList = snapshot.data;
+            postList!.addAll(Const.dummyPosts);
+            print("snapshot data = ${postList.length}");
+            return postList.isNotEmpty
+                ? ListView.builder(
+                    itemCount: postList.length + 1, // 1 yatay listview eklendi
+                    itemBuilder: (context, index) {
+                      if (index == 0) {
+                        return SizedBox(
+                          height: 100,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: 10,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: Container(
+                                  height: 100,
+                                  width: 100,
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.greenAccent,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      } else {
+                        final post = postList[index - 1];
                         return PostWidget(
                           post: post,
                         );
-                      })
-                  : const Center(
-                      child: Text("error"),
-                    );
-            }
-            return const Center(child: CircularProgressIndicator());
-          }),
+                      }
+                    },
+                  )
+                : const Center(
+                    child: Text("error"),
+                  );
+          }
+          return const Center(child: CircularProgressIndicator());
+        },
+      ),
     );
   }
 }
