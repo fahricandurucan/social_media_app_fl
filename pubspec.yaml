@@ -49,6 +49,7 @@ dependencies:
   animated_text_kit: ^4.2.2
   hive: ^2.2.3
   hive_flutter: ^1.1.0
+  flutterflow_paginate_firestore: ^1.0.3+1
   
 
 dev_dependencies:
