@@ -28,7 +28,7 @@ class HomePage extends StatelessWidget {
       body: Column(
         children: [
           SizedBox(
-            height: 125,
+            height: 105,
             child: StreamBuilder(
                 stream: AuthApi.getAllUser(),
                 builder: (context, snapshot) {
@@ -46,8 +46,8 @@ class HomePage extends StatelessWidget {
                                       child: ClipRRect(
                                         borderRadius: const BorderRadius.all(Radius.circular(50)),
                                         child: SizedBox(
-                                          height: 100,
-                                          width: 100,
+                                          height: 80,
+                                          width: 80,
                                           child: Image.network(
                                             user.profileImage,
                                             fit: BoxFit.cover,
@@ -60,8 +60,8 @@ class HomePage extends StatelessWidget {
                                       child: ClipRRect(
                                         borderRadius: const BorderRadius.all(Radius.circular(50)),
                                         child: Container(
-                                            height: 100,
-                                            width: 100,
+                                            height: 80,
+                                            width: 80,
                                             color: CColors.black,
                                             child: const Icon(
                                               Icons.person,
@@ -79,7 +79,9 @@ class HomePage extends StatelessWidget {
           ),
           Expanded(
             child: PaginateFirestore(
-              query: FirebaseFirestore.instance.collection("allPost"),
+              query: FirebaseFirestore.instance
+                  .collection("allPost")
+                  .orderBy("date", descending: true),
               itemBuilderType: PaginateBuilderType.listView,
               itemsPerPage: 3,
               isLive: true,

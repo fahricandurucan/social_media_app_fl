@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:social_media_app_fl/controllers/register_controller.dart';
 import 'package:social_media_app_fl/models/post.dart';
 import 'package:social_media_app_fl/pages/detail_page.dart';
 import 'package:social_media_app_fl/widgets/circle_avatar_widget.dart';
@@ -11,6 +12,7 @@ class PostWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final registerController = Get.put(RegisterController());
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
       child: Container(
@@ -28,7 +30,21 @@ class PostWidget extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const CircleAvatarWidget(radius: 20),
+                    registerController.currentUser.value!.profileImage != ""
+                        ? ClipRRect(
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(75),
+                            ),
+                            child: SizedBox(
+                              width: 40,
+                              height: 40,
+                              child: Image.network(
+                                registerController.currentUser.value!.profileImage,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          )
+                        : const CircleAvatarWidget(radius: 20),
                     const SizedBox(
                       width: 10,
                     ),

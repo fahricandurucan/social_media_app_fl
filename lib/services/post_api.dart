@@ -30,6 +30,19 @@ class PostApi {
     return streamList;
   }
 
+  static Stream<List<Post>> getPostsByUser(String uid) {
+    final result = store
+        .collection("users")
+        .doc(uid)
+        .collection("posts")
+        .orderBy('date', descending: true)
+        .snapshots();
+    final streamList =
+        result.map((event) => event.docs.map((e) => Post.fromMap(e.data())).toList());
+
+    return streamList;
+  }
+
 //   Future<void> getPostsOrderedByDate() async {
 //   try {
 //     CollectionReference postsRef = FirebaseFirestore.instance.collection('posts');

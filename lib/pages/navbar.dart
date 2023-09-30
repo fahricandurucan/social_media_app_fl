@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:social_media_app_fl/controllers/register_controller.dart';
 import 'package:social_media_app_fl/pages/adding_post_page.dart';
-import 'package:social_media_app_fl/pages/favorite_page.dart';
 import 'package:social_media_app_fl/pages/home_page.dart';
 import 'package:social_media_app_fl/pages/profile_page.dart';
+import 'package:social_media_app_fl/pages/yours_post_page.dart';
 import 'package:social_media_app_fl/utils/theme.dart';
 
 class NavBar extends StatelessWidget {
@@ -19,7 +19,7 @@ class NavBar extends StatelessWidget {
       body: Obx(() => controller.bottomNavIdx.value == 0
           ? const HomePage()
           : controller.bottomNavIdx.value == 1
-              ? const FavoritePage()
+              ? const YoursPostPage()
               : controller.bottomNavIdx.value == 2
                   ? const AddingPostPage()
                   : const ProfilePage()),
@@ -45,8 +45,8 @@ class NavBar extends StatelessWidget {
                 iconColor: Colors.grey,
               ),
               GButton(
-                icon: Icons.favorite,
-                text: "Favorites",
+                icon: Icons.local_post_office_rounded,
+                text: "Yours",
                 iconColor: Colors.grey,
               ),
               GButton(
