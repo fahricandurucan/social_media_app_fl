@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterflow_paginate_firestore/paginate_firestore.dart';
 import 'package:social_media_app_fl/models/post.dart';
+import 'package:social_media_app_fl/services/auth_api.dart';
+import 'package:social_media_app_fl/utils/theme.dart';
 import 'package:social_media_app_fl/widgets/animated_text_widget.dart';
 import 'package:social_media_app_fl/widgets/post_widget.dart';
 
@@ -26,24 +28,54 @@ class HomePage extends StatelessWidget {
       body: Column(
         children: [
           SizedBox(
-            height: 100,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Container(
-                    height: 100,
-                    width: 100,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.greenAccent,
-                    ),
-                  ),
-                );
-              },
-            ),
+            height: 125,
+            child: StreamBuilder(
+                stream: AuthApi.getAllUser(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    var userList = snapshot.data;
+                    return userList!.isNotEmpty
+                        ? ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: userList.length,
+                            itemBuilder: (context, index) {
+                              var user = userList[index];
+                              return user.profileImage != ''
+                                  ? Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: ClipRRect(
+                                        borderRadius: const BorderRadius.all(Radius.circular(50)),
+                                        child: SizedBox(
+                                          height: 100,
+                                          width: 100,
+                                          child: Image.network(
+                                            user.profileImage,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  : Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: ClipRRect(
+                                        borderRadius: const BorderRadius.all(Radius.circular(50)),
+                                        child: Container(
+                                            height: 100,
+                                            width: 100,
+                                            color: CColors.black,
+                                            child: const Icon(
+                                              Icons.person,
+                                              size: 45,
+                                              color: CColors.cyan,
+                                            )),
+                                      ),
+                                    );
+                            },
+                          )
+                        : const SizedBox();
+                  }
+                  return const Center(child: CircularProgressIndicator());
+                }),
           ),
           Expanded(
             child: PaginateFirestore(

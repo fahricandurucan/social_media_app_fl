@@ -56,6 +56,14 @@ class AuthApi {
     return UserModel.fromMap(user!);
   }
 
+  static Stream<List<UserModel>> getAllUser() {
+    final result = store.collection("users").snapshots();
+    final streamList =
+        result.map((event) => event.docs.map((e) => UserModel.fromMap(e.data())).toList());
+
+    return streamList;
+  }
+
   static Future<void> registerUser(UserModel userModel) async {
     try {
       await userCollection.doc(userModel.id).set(userModel.toMap());
@@ -66,5 +74,14 @@ class AuthApi {
 
   static Future<void> updateProfilePhotoUser(String uid, String url) async {
     await userCollection.doc(uid).update({"profileImage": url});
+  }
+
+  static Future<void> signOut() async {
+    try {
+      await auth.signOut();
+      Get.offAll(const RootWrapper());
+    } catch (err) {
+      print("Sign Out Error: $err");
+    }
   }
 }

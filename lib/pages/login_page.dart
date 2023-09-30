@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:social_media_app_fl/controllers/login_controller.dart';
+import 'package:social_media_app_fl/pages/register_page.dart';
 import 'package:social_media_app_fl/services/auth_api.dart';
 
 class LoginPage extends StatelessWidget {
@@ -28,16 +29,38 @@ class LoginPage extends StatelessWidget {
               decoration: const InputDecoration(labelText: 'Password'),
               obscureText: true,
             ),
-            ElevatedButton(
-              onPressed: () {
-                AuthApi.signIn(
-                    email: loginController.email.text, password: loginController.password.text);
-                loginController.email.text = "";
-                loginController.password.text = "";
-                print("00000000000000 ${loginController.email.text}");
-              },
-              child: const Text('Log in'),
+            const SizedBox(
+              height: 20,
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    AuthApi.signIn(
+                        email: loginController.email.text, password: loginController.password.text);
+                    loginController.email.text = "";
+                    loginController.password.text = "";
+                    print("00000000000000 ${loginController.email.text}");
+                  },
+                  child: const Text('Log in'),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text("or..."),
+                TextButton(
+                    onPressed: () {
+                      Get.offAll(const RegisterPage());
+                    },
+                    child: const Text("register"))
+              ],
+            )
           ],
         ),
       ),

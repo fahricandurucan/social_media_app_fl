@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:social_media_app_fl/controllers/profile_page_controller.dart';
 import 'package:social_media_app_fl/controllers/register_controller.dart';
-import 'package:social_media_app_fl/pages/login_page.dart';
+import 'package:social_media_app_fl/services/auth_api.dart';
 import 'package:social_media_app_fl/widgets/alert_dialog_widget.dart';
 import 'package:social_media_app_fl/widgets/animated_text_widget.dart';
 import 'package:social_media_app_fl/widgets/circle_avatar_widget.dart';
@@ -16,6 +15,8 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final registerController = Get.find<RegisterController>();
     final profilController = Get.put(ProfilePageController());
+
+    print("7777777${registerController.currentUser.value!.profileImage}");
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -44,7 +45,7 @@ class ProfilePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Obx(
-              () => profilController.profilUrl.value != ""
+              () => profilController.currentUser.value!.profileImage != ""
                   ? ClipRRect(
                       borderRadius: const BorderRadius.all(
                         Radius.circular(75),
@@ -53,7 +54,7 @@ class ProfilePage extends StatelessWidget {
                         width: 150,
                         height: 150,
                         child: Image.network(
-                          profilController.profilUrl.value,
+                          profilController.currentUser.value!.profileImage,
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -119,11 +120,7 @@ class ProfilePage extends StatelessWidget {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                EasyLoading.show();
-                Future.delayed(const Duration(seconds: 1), () {
-                  Get.offAll(const LoginPage());
-                  EasyLoading.dismiss();
-                });
+                AuthApi.signOut();
               },
               child: const Text('Çıkış Yap'),
             ),
